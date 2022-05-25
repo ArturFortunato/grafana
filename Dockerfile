@@ -8,6 +8,8 @@ COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
 COPY packages packages
 COPY plugins-bundled plugins-bundled
+COPY grafana.ini /etc/grafana/grafana.ini
+RUN ls /etc/grafana/
 
 RUN yarn install
 
@@ -91,6 +93,8 @@ COPY --from=js-builder /grafana/tools ./tools
 EXPOSE 3000
 
 COPY ./packaging/docker/run.sh /run.sh
+
+COPY grafana.ini /etc/grafana/grafana.ini
 
 USER grafana
 ENTRYPOINT [ "/run.sh" ]
